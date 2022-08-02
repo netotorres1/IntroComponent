@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import background from './../data/bg-intro-desktop.png'
 import backgroundMobile from './../data/bg-intro-mobile.png'
@@ -118,6 +118,49 @@ const ContainerFormP = styled.div`
 
 const Home = () => {
 
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const [errorFN, setErrorFN] = useState('');
+  const [errorLN, setErrorLN] = useState('');
+  const [errorEmail, setErrorEmail] = useState('');
+  const [errorPassword, setErrorPassword] = useState('');
+  
+
+  const handleOnChangeName = (e) => {
+    setFirstName(e.target.value);
+  }
+  const handleOnLastName = (e) => {
+    setLastName(e.target.value);
+  }
+  const handleOnChangeEmail = (e) => {
+    setEmail(e.target.value);
+  }
+  const handleOnChangePassword = (e) => {
+    setPassword(e.target.value);
+  }
+
+  const Validation = () => {
+    const regEx = /[a-zA-Z0-9._%+-]+@[a-z0-9*-]+\.[a-z]{2,8}(.[a-z{2,8}]?)/g
+
+    if(email === ''){
+        setErrorEmail('Email cannot be empty!');
+    }else if(!regEx.test(email)){
+        setErrorEmail('Looks like this is not a email!');
+    }else if(firstName === ''){
+        setErrorFN("First Name cannot be empty!")
+    }else if(lastName === ''){
+      setErrorLN('Last Name cannot be empty!')
+    }else if(password === ''){
+      setErrorPassword('Password cannot be empty!')
+    }
+}
+  const Error = styled.span`
+    color: red;
+  `
+
   return (
     <Container>
       <ContainerInfo>
@@ -128,11 +171,11 @@ const Home = () => {
       
       <ContainerForm>
       <ContainerFree><b>Try it free 7 days</b> then $20/mo. thereafter</ContainerFree>
-        <InputFirstName placeholder='First Name ' />
-        <InputLastName placeholder='Last Name ' />
-        <InputEmail placeholder='Email Address' />
-        <InputPassword placeholder='Password' />
-        <Button>CLAIN YOUR FREE TRIAL</Button>
+        <InputFirstName placeholder='First Name ' value={firstName} onChange={handleOnChangeName} /> <Error>{errorFN}</Error>
+        <InputLastName placeholder='Last Name ' value={lastName} onChange={handleOnLastName} /> <Error>{errorLN}</Error>
+        <InputEmail placeholder='Email Address' value={email} onChange={handleOnChangeEmail} /> <Error>{errorEmail}</Error>
+        <InputPassword placeholder='Password' value={password} onChange={handleOnChangePassword} /> <Error>{errorPassword}</Error>
+        <Button onClick={Validation}>CLAIN YOUR FREE TRIAL</Button>
         <ContainerFormP>
           <FormP>By clicking the button, you are agreeing to our <FormPBold>Terms and Services</FormPBold></FormP>
         </ContainerFormP>
