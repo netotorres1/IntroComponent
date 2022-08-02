@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import background from './../data/bg-intro-desktop.png'
-import backgroundMobile from './../data/bg-intro-mobile.png'
 import {mobile} from './../responsive'
 
 const Container = styled.div`
